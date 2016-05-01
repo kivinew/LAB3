@@ -13,12 +13,10 @@
 #define ENTER       13
 #define DEL         83 
 
-int menu(Complex** &, int &);
-void grow(Complex** &, int &);
-void createObj(Complex** &, int &, int number = 0);
-void createCopy(Complex** &, int &, int);
-void showTable(Complex** &, int);
-void deleteAll(Complex** &, int);
+int menu(Numbers** &, int &);
+void createCopy(Numbers** &, int &, int);
+void showTable(Numbers** &, int);
+void deleteAll(Numbers** &, int);
 
 int main()
 {
@@ -27,11 +25,11 @@ int main()
 
     Complex::setSize();    
     system("cls");
-    while (menu(Complex::, Complex::getSize())==TRUE);
+    while (menu(Complex::getArray(), Complex::getSize())==TRUE);
     return 0;
 }
 
-int menu(Complex** &objectArray, int &size)                                 // вывод таблицы объектов и меню
+int menu(Numbers** &objectArray, int &size)                                 // вывод таблицы объектов и меню
 {
     system("cls");
 
@@ -47,7 +45,7 @@ int menu(Complex** &objectArray, int &size)                                 // в
     {
     case ONE:                                                           // ---------вставить объект---------
     {
-        createObj(objectArray, size);
+        Complex::createObj(objectArray, size);
         break;
     }
     case ENTER:                                                         // --------выбрать один элемент---------
@@ -74,7 +72,7 @@ int menu(Complex** &objectArray, int &size)                                 // в
                 if (objectArray[number]!=NULL)                          // если указатель не равер нулю
                     objectArray[number]->edit();                        // то его можно изменить,
                 else                                                    //
-                    createObj(objectArray, size, number);               // а иначе создать
+                    Complex::createObj(objectArray, size, number);      // а иначе создать
                 break;
             case DEL:                                                   // --------удаление указател€ на объект---------
                 Complex::del(objectArray[number]);
@@ -92,7 +90,7 @@ int menu(Complex** &objectArray, int &size)                                 // в
         }
         break;
     }
-    case ESC:                                                           // ---------выход из программы---------
+    case ESC:                                                               // ---------выход из программы---------
         deleteAll(objectArray, size);
         return FALSE;
         break;
@@ -100,22 +98,22 @@ int menu(Complex** &objectArray, int &size)                                 // в
     return TRUE;
 }
 
-void createCopy(Complex** &arr, int &size, int elementToCopy)               // скопировать объект
+void createCopy(Numbers** &arr, int &size, int elementToCopy)               // скопировать объект
 {
     if (Complex::getCounter()==size)                                        // если количество объектов равно размеру массива
-        grow(arr, size);                                                    // то его нужно увеличить
+        Complex::grow(arr, size);                                           // то его нужно увеличить
     for (int i = 0; i<size; i++)
     {
         if (arr[i]==NULL)                          	                        // если указатель нулевой, то
         {                                                                   // 
-            arr[i] = new Complex(*arr[elementToCopy]);                      // создать в этой €чейке объект
+            arr[i] = new Complex(*arr[elementToCopy]);                    	// создать в этой €чейке объект
             return;
         }
     }
     return;
 }
 
-void showTable(Complex** &arr, int size)                                    // вывод таблицы объектов
+void showTable(Numbers** &arr, int size)                                    // вывод таблицы объектов
 {
     cout<<"ќбъект :\t"<<"ћодуль :\t"<<"јргумент :\t"<<endl;
     for (int i = 0; i<size; i++)
@@ -130,7 +128,7 @@ void showTable(Complex** &arr, int size)                                    // в
     }
 }
 
-void deleteAll(Complex** &arr, int size)                // удаление массива
+void deleteAll(Numbers** &arr, int size)                // удаление массива
 {
     for (int i = 0; i<size; i++)
     {

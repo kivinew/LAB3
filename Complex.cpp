@@ -43,6 +43,11 @@ int Complex::getSize()
     return arrSize;
 }
 
+Numbers** Complex::getArray()
+{
+    return arrPointers;
+}
+
 int Complex::getCounter()                                               // возврат количества объектов
 {
     return counter;
@@ -53,16 +58,16 @@ int Complex::getNum()                                                   // во�
     return objNum;
 }
 
-void createObj(Numbers** &arr, int &size, int elementNumber)        // создать объект
+void Complex::createObj(Numbers** &arr, int &size, int elementNumber)        // создать объект
 {
     if (Complex::getCounter()==size)                                // если количество объектов равно размеру массива
-        Complex::grow(arr, size);                                            // то его нужно увеличить
+        Complex::grow(arrPointers, arrSize);                                   // то его нужно увеличить
     for (int i = elementNumber; i<size; i++)
     {
         if (arr[i]==NULL)                          	                // если указатель нулевой, то
         {                                                           // 
             arr[i] = Complex::add();                                // создать в этой ячейке объект
-            cin>>*arr[i];
+            //cin>>*arr[i];
             return;
         }
     }
@@ -75,20 +80,20 @@ void Complex::edit()                                                // реда�
     return;
 }
 
-Numbers* Complex::add()                                             // создать указатель на объект
-{
+Numbers* Complex::add()                             // создать указатель типа Numbers
+{                                                   // на объект типа Complex
     Numbers* newPtr = new Complex;
     return newPtr;
 }
 
-void Complex::del(Complex* &obj)                                        // удаление объекта
+void Complex::del(Numbers* &obj)                                        // удаление объекта
 {
-    delete this;
+    delete obj;
     obj = NULL;
     return;
 }
 
-void Complex::grow(Numbers** &arr, int &size)                // увеличение массива указателей в два раза
+void Complex::grow(Numbers** &arr, int &size)       // увеличение массива указателей в два раза
 {
     int newSize;                                    // новый размер массива
     newSize = size*2;

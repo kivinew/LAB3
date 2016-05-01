@@ -27,12 +27,13 @@ public:
     /*-----------------------------------------------------*/
     static void setSize();
     static int getSize();
+    static Numbers** getArray();
     static Numbers* add();
-    void del(Complex* &);
+    static void del(Numbers* &);
     static void grow(Numbers** &, int &);
+    static void createObj(Numbers** &, int &, int elementNumber=0);
     virtual void edit();
     virtual void showObject();
-    void showObject();
     static int getCounter();
     int getNum();
     /*-----------------------------------------------------*/
