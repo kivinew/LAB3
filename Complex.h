@@ -25,6 +25,8 @@ public:
     double mod();
     double arg();
     /*-----------------------------------------------------*/
+    static int arrSize;
+    static Numbers** arrPointers;
     static void setSize();
     static int getSize();
     static Numbers** getArray();
@@ -33,7 +35,7 @@ public:
     static void grow(Numbers** &, int &);
     static void createObj(Numbers** &, int &, int elementNumber=0);
     virtual void edit();
-    virtual void showObject();
+    virtual void show();
     static int getCounter();
     int getNum();
     /*-----------------------------------------------------*/

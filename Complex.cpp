@@ -112,7 +112,7 @@ void Complex::grow(Numbers** &arr, int &size)       // увеличение ма
     return;
 }
 
-void Complex::showObject()                                              // вывод объекта
+void Complex::show()                                              // вывод объекта
 {
     cout<<*this<<endl;
     return;

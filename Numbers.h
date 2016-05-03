@@ -3,7 +3,11 @@ class Numbers
 {
 
 public:
-    virtual ~Numbers() {};
+    virtual ~Numbers() 
+    {
+        cout<<"Numbers destructor!"<<endl;
+        _getch();
+    };
     virtual void edit() = 0;
-    virtual void showObject() = 0;
+    virtual void show() = 0;
 };

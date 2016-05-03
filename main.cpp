@@ -13,7 +13,7 @@
 #define ENTER       13
 #define DEL         83 
 
-int menu(Numbers** &, int &);
+int menu();
 void createCopy(Numbers** &, int &, int);
 void showTable(Numbers** &, int);
 void deleteAll(Numbers** &, int);
@@ -25,16 +25,17 @@ int main()
 
     Complex::setSize();    
     system("cls");
-    while (menu(Complex::getArray(), Complex::getSize())==TRUE);
+    while (menu()==TRUE);
     return 0;
 }
 
-int menu(Numbers** &objectArray, int &size)                                 // вывод таблицы объектов и меню
+int menu()                                 // вывод таблицы объектов и меню
 {
     system("cls");
+    Numbers** objectArray = Complex::getArray();                        // достаЄм из класса массив
+    int size = Complex::getSize();                                      // и его размер
 
     showTable(objectArray, size);
-
     cout<<"\t1        - быстра€ вставка объекта в пустую строку"<<endl                     // меню
         <<"\tENTER    - выбрать элемент таблицы"<<endl
         <<"\tESC      - выход из программы"<<endl;
@@ -106,8 +107,9 @@ void createCopy(Numbers** &arr, int &size, int elementToCopy)               // с
     {
         if (arr[i]==NULL)                          	                        // если указатель нулевой, то
         {                                                                   // 
-            arr[i] = new Complex(*arr[elementToCopy]);                    	// создать в этой €чейке объект
-            return;
+            Complex obj = arr[elementToCopy];
+            *arr[i] = new Complex(obj);                    	// создать в этой €чейке объект
+            return;                                                         // как копию
         }
     }
     return;
@@ -121,7 +123,7 @@ void showTable(Numbers** &arr, int size)                                    // в
         cout<<i<<": ";
         if (arr[i]!=NULL)                                                   // если указатель не равен нулю
         {
-            (*arr[i]).showObject();                                         // то выводим объект
+            (*arr[i]).show();                                         // то выводим объект
         }
         else
             cout<<"empty"<<endl;
