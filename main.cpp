@@ -14,6 +14,7 @@
 #define DEL         83 
 
 int menu();
+void createTable(Numbers** &, int &);
 void createCopy(Numbers** &, int &, int);
 void showTable(Numbers** &, int);
 void deleteAll(Numbers** &, int);
@@ -34,7 +35,7 @@ int menu()                                 // вывод таблицы объектов и меню
     system("cls");
     Numbers** objectArray = Complex::getArray();                        // достаЄм из класса массив
     int size = Complex::getSize();                                      // и его размер
-
+    createTable(objectArray, size);
     showTable(objectArray, size);
     cout<<"\t1        - быстра€ вставка объекта в пустую строку"<<endl                     // меню
         <<"\tENTER    - выбрать элемент таблицы"<<endl
@@ -99,6 +100,12 @@ int menu()                                 // вывод таблицы объектов и меню
     return TRUE;
 }
 
+void createTable(Numbers **&arr, int &size)
+{
+    for (int i = 0; i<size; i++)
+        *(arr+i) = Complex::add();
+}
+
 void createCopy(Numbers** &arr, int &size, int elementToCopy)               // скопировать объект
 {
     if (Complex::getCounter()==size)                                        // если количество объектов равно размеру массива
@@ -107,8 +114,8 @@ void createCopy(Numbers** &arr, int &size, int elementToCopy)               // с
     {
         if (arr[i]==NULL)                          	                        // если указатель нулевой, то
         {                                                                   // 
-            Complex obj = arr[elementToCopy];
-            *arr[i] = new Complex(obj);                    	// создать в этой €чейке объект
+            //Complex obj = arr[elementToCopy];
+            //*arr[i] = new Complex(obj);                    	// создать в этой €чейке объект
             return;                                                         // как копию
         }
     }
@@ -138,6 +145,6 @@ void deleteAll(Numbers** &arr, int size)                // удаление массива
     }
     delete[] arr;                                       // удаление массива
     cout<<"ћассив удалЄн"<<endl;
-    _getch();
+    //_getch();
     return;
 }

@@ -4,7 +4,7 @@ int Complex::counter;
 int Complex::num;
 double const Complex::pi = 3.1415926536;
 int Complex::arrSize;
-Numbers** Complex::arrPointers;
+Numbers** Complex::arrPointers = new Numbers*;
 
 Complex::Complex(): real(0.), image(0.)                                 // конструктор по умолчанию
 {
@@ -38,12 +38,12 @@ void Complex::setSize()
     return;
 }
 
-int Complex::getSize()
+int Complex::getSize()                                                  // вернуть размер
 {
     return arrSize;
 }
 
-Numbers** Complex::getArray()
+Numbers** Complex::getArray()                                           // вернуть массив
 {
     return arrPointers;
 }
@@ -67,7 +67,7 @@ void Complex::createObj(Numbers** &arr, int &size, int elementNumber)        // 
         if (arr[i]==NULL)                          	                // если указатель нулевой, то
         {                                                           // 
             arr[i] = Complex::add();                                // создать в этой ячейке объект
-            //cin>>*arr[i];
+            arr[i]->edit();
             return;
         }
     }
@@ -82,7 +82,7 @@ void Complex::edit()                                                // реда�
 
 Numbers* Complex::add()                             // создать указатель типа Numbers
 {                                                   // на объект типа Complex
-    Numbers* newPtr = new Complex;
+    Numbers* newPtr = new Complex(1,1);
     return newPtr;
 }
 

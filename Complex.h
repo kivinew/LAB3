@@ -1,11 +1,6 @@
 // производный класс
-#pragma once
+
 #include "Numbers.h"
-#include <iostream>
-#include <conio.h>
-#include <math.h>
-#include <Windows.h>
-using namespace std;
 
 class Complex: public Numbers
 {
@@ -25,8 +20,6 @@ public:
     double mod();
     double arg();
     /*-----------------------------------------------------*/
-    static int arrSize;
-    static Numbers** arrPointers;
     static void setSize();
     static int getSize();
     static Numbers** getArray();
