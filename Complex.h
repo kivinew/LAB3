@@ -1,37 +1,31 @@
-// производный класс
-
+/* ПРОИЗВОДНЫЙ КЛАСС */
 #include "Numbers.h"
 
 class Complex: virtual public Numbers
 {
-    const double static pi;
-    static int counter;                                         // счётчик объектов
-    static int num;                                             // 
-    int objNum;                                                 // номер объекта
+    static Numbers** arrPtr;                                 //указатели БАЗОВОГО типа
+    static int arrSize;
+    static const double pi;
+    static int counter;
     double real, image;
-    static Numbers* arrPointers;                               // объявление массива указателей
-    static int arrSize;                                         // размер массива
-
 public:
     Complex();
     Complex(double, double);
     Complex(const Complex &);
-    ~Complex();
+    virtual ~Complex();
+
     double mod();
     double arg();
-    /*-----------------------------------------------------*/
+    static Numbers** getArr();
     static void setSize();
     static int getSize();
-    static Numbers* getArray();
-    static Complex add();
-    static void del(Numbers*);
-    //static void grow(Complex* &, int);
-    static void createObj(Numbers* &, int &, int elementNumber=0);
+    static Complex* add();
     virtual void edit();
     virtual void show();
+    static void showAll();
+    static void del(int num);
     static int getCounter();
-    int getNum();
-    /*-----------------------------------------------------*/
+
     friend ostream & operator << (ostream &out, Complex &obj);
-    friend istream & operator >> (istream &in, Complex &obj);
+    friend istream & operator>>(istream &in, Complex &obj);
 };

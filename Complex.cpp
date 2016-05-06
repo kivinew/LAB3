@@ -1,128 +1,95 @@
-﻿#include "Complex.h"
+﻿#include "comPlex.h"
 
-int Complex::counter;
-int Complex::num;
-double const Complex::pi = 3.1415926536;
+Numbers** Complex::arrPtr;
 int Complex::arrSize;
-Numbers* Complex::arrPointers = new Complex;
+int Complex::counter;
+double const Complex::pi = 3.1415926536;
 
-Complex::Complex(): real(0.), image(0.)                                 // конструктор по умолчанию
+Complex::Complex(): real(0.), image(0.)                                         // конструктор по умолчанию
 {
-    objNum = ++num;
     counter++;
 }
 
-Complex::Complex(double re, double im): real(re), image(im)             // конструктор с параметрами
+Complex::Complex(double re, double im) : real(re), image(im)                     // конструктор с параметрами
 {
-    objNum = ++num;
     counter++;
 }
 
-Complex::Complex(const Complex &obj): real(obj.real), image(obj.image)  // конструктор копирования
+Complex::Complex(const Complex &obj) : real(obj.real), image(obj.image)          // конструктор копирования
 {
-    objNum = ++num;
     counter++;
 }
 
-Complex::~Complex()                                                     // деструктор
+Complex::~Complex()                                                             // деструктор
 {
     counter--;
 }
 
-void Complex::setSize()
-{
-    cout<<"Введите количество объектов: ";
-    cin>>arrSize;
-    if (arrSize==0)
-        arrSize = 1;
-    return;
-}
-
-int Complex::getSize()                                                  // вернуть размер
-{
-    return arrSize;
-}
-
-Numbers* Complex::getArray()                                           // вернуть массив
-{
-    return arrPointers;
-}
-
-int Complex::getCounter()                                               // возврат количества объектов
+int Complex::getCounter()                                                       // возврат счётчика
 {
     return counter;
 }
 
-int Complex::getNum()                                                   // возврат номера объекта
+Numbers** Complex::getArr()
 {
-    return objNum;
+    return arrPtr;
 }
 
-void Complex::createObj(Numbers* &arr, int &size, int elementNumber)        // создать объект
+void Complex::setSize()
 {
-    if (Complex::getCounter()==size)                                        // если количество объектов равно размеру массива
-        //Complex::grow(arrPointers, arrSize);                              // то его нужно увеличить
-    for (int i = elementNumber; i<size; i++)
-    {
-        if (arr+i == NULL)                          	                    // если указатель нулевой, то
-        {                                                                   // 
-            arr[i] = Complex::add();                                        // создать в этой ячейке объект
-            arr[i].edit();
-            return;
-        }
-    }
+    cout<<"Введите размер массива: ";
     return;
 }
 
-void Complex::edit()                                                // редактирование объекта
+int Complex::getSize()
+{
+    return arrSize;
+}
+
+Complex* Complex::add()
+{
+    Complex* ptr = new Complex(-1,-1);
+    return ptr;
+}
+
+void Complex::edit()
 {
     cin>>*this;
     return;
 }
 
-Complex Complex::add()                             // создать указатель типа Numbers
-{                                                   // на объект типа Complex
-    Complex* newPtr = new Complex(1.,1.);
-    return *newPtr;
-}
-
-void Complex::del(Numbers* obj)                                        // удаление объекта
+void Complex::del(int num)                                        // удаление объекта
 {
-    delete obj;
-    obj = NULL;
+    if (arrPtr[num]!=NULL)
+    {
+        delete arrPtr[num];
+        arrPtr[num] = NULL;
+    }
     return;
 }
-
-//void Complex::grow(Complex* &arr, int size)       // увеличение массива указателей в два раза
-//{
-//    int newSize;                                    // новый размер массива
-//    newSize = size*2;
-//    Complex* newArr = new Complex[newSize];         // новый массив
-//    for (int i = 0; i<newSize; i++)
-//    {
-//        if (i<size)                                 // значения элементов старого массива
-//            newArr[i] = arr[i];                     // присваиваем элементам нового
-//        else
-//            newArr[i] = NULL;
-//    }
-//    delete[] arr;                                   // удалён старый массив
-//    arr = newArr;                                   // и его указателю присвоен новый
-//    size = newSize;
-//    return;
-//}
 
 void Complex::show()                                              // вывод объекта
 {
-    cout<<*this<<endl;
+    cout<<"Z="<<real<<"+"<<image<<"*i"<<"\t"<<"|Z|="<<mod()<<"\t";
+    if (arg()!=0)
+        cout<<"arg Z="<<arg()*180/pi<<"\t"<<endl;
+    else
+        cout<<"n/a"<<endl;
     return;
 }
 
-double Complex::mod()                                                   // модуль |Z|
+void Complex::showAll()
+{
+    for (int i = 0; i<arrSize; i++)
+        arrPtr[i]->show();
+}
+
+double Complex::mod()                                                   // ìîäóëü |Z|
 {
     return sqrt(real*real+image*image);
 }
 
-double Complex::arg()                                                   // аргумент arg Z
+double Complex::arg()                                                   // àðãóìåíò arg Z
 {
     if (real>0) return atan(image/real);
     if (real<0)

@@ -2,7 +2,6 @@
 
 #include "Complex.h"
 #include <locale>
-#include <Windows.h>
 #define ESC         27
 #define SPACEBAR    32
 #define ONE         49
@@ -11,22 +10,18 @@
 #define DEL         83 
 
 int menu();
-void createTable(Numbers* &, int &);
-void createCopy(Numbers* &, int &, int);
-void showTable(Numbers* &, int);
-void deleteAll(Numbers* &, int);
+void createTable(Numbers** &);
+void showTable(Numbers** &);
+void deleteAll(Numbers** &);
 
-Numbers* objectArray;                                      // массив указателей базового типа
-int arrSize;                                                // размер массива
+Numbers** arrPtr = Complex::getArr();
+int arrSize = Complex::getSize();
 
 int main()
 {
     setlocale(LC_ALL, "Ru");
     SetConsoleTitleA("Complex numbers. LAB3");
 
-    objectArray = Complex::getArray();                      // достаём из класса массив
-    Complex::setSize();
-    arrSize = Complex::getSize();                           // и его размер
     system("cls");
     while (menu()==TRUE);
     return 0;
@@ -34,10 +29,12 @@ int main()
 
 int menu()                                 // вывод таблицы объектов и меню
 {
+    int countObjects = Complex::getCounter();
     system("cls");
+    Complex::setSize();
+    createTable(arrPtr);
+    showTable(arrPtr);
 
-    createTable(objectArray, arrSize);
-    showTable(objectArray, arrSize);
     cout<<"\t1        - быстрая вставка объекта в пустую строку"<<endl                     // меню
         <<"\tENTER    - выбрать элемент таблицы"<<endl
         <<"\tESC      - выход из программы"<<endl;
@@ -48,7 +45,6 @@ int menu()                                 // вывод таблицы объектов и меню
     {
     case ONE:                                                           // ---------вставить объект---------
     {
-        Complex::createObj(objectArray, arrSize);
         break;
     }
     case ENTER:                                                         // --------выбрать один элемент---------
@@ -56,11 +52,10 @@ int menu()                                 // вывод таблицы объектов и меню
         int number;
         cout<<"Укажите номер строки: ";
         cin>>number;
-        int countObjects = Complex::getCounter();                       // количество объектов в массиве
         if (!(number>=arrSize)&&!(number<0))
         {
             cout<<endl<<"ENTER    - ввести данные комплексного числа"<<endl;
-            if (objectArray+number!=NULL)
+            if (arrPtr[number]!=NULL)
             {
                 cout<<"DELETE   - удалить комплексное число"<<endl
                     <<"SPACEBAR - скопировать комплексное число"<<endl;
@@ -72,17 +67,13 @@ int menu()                                 // вывод таблицы объектов и меню
             switch (choice)
             {
             case ENTER:                                                 // ------изменить объект-------
-                if (objectArray+number!=NULL)                          // если указатель не равер нулю
-                    objectArray[number].edit();                        // то его можно изменить,
+                if (arrPtr[number]!=NULL)                           // если указатель не равер нулю
+                    arrPtr[number]->edit();                        // то его можно изменить,
                 else                                                    //
-                    Complex::createObj(objectArray, arrSize, number);      // а иначе создать
+                    Complex::add();                                     // а иначе создать
                 break;
             case DEL:                                                   // --------удаление указателя на объект---------
-                Complex::del(&objectArray[number]);
-                break;
-            case SPACEBAR:                                              // --------настроить конструктор копирования---------
-                if (objectArray+number!=NULL)
-                    createCopy(objectArray, arrSize, number);
+                Complex::del(number);
                 break;
             }
         }
@@ -94,58 +85,43 @@ int menu()                                 // вывод таблицы объектов и меню
         break;
     }
     case ESC:                                                               // ---------выход из программы---------
-        deleteAll(objectArray, arrSize);
+        deleteAll(arrPtr);
         return FALSE;
         break;
     }
     return TRUE;
 }
 
-void createTable(Numbers *&objectArray, int &arrSize)
+void createTable()
 {
     for (int i = 0; i<arrSize; i++)
-        objectArray[i] = Complex::add();
-}
-
-void createCopy(Numbers* &objectArray, int &arrSize, int elementToCopy)               // скопировать объект
-{
-    if (Complex::getCounter()==arrSize)                                        // если количество объектов равно размеру массива
-        //Complex::grow(objectArray, arrSize);                                           // то его нужно увеличить
-    for (int i = 0; i<arrSize; i++)
-    {
-        if (objectArray+i==NULL)                          	                        // если указатель нулевой, то
-        {                                                                   // 
-            //Complex obj = objectArray[elementToCopy];
-            //*objectArray[i] = new Complex(obj);                    	// создать в этой ячейке объект
-            return;                                                         // как копию
-        }
-    }
+        arrPtr[i] = Complex::add();
     return;
 }
 
-void showTable(Numbers* &objectArray, int arrSize)                                    // вывод таблицы объектов
+void showTable()                            // вывод таблицы объектов
 {
     cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
     for (int i = 0; i<arrSize; i++)
     {
         cout<<i<<": ";
-        if (objectArray+i != NULL)                                                   // если указатель не равен нулю
+        if (arrPtr[i]!=NULL)                // если указатель не равен нулю
         {
-            (objectArray+i)->show();                                         // то выводим объект
+            arrPtr[i]->show();              // то выводим объект
         }
         else
             cout<<"empty"<<endl;
     }
+    return;
 }
 
-void deleteAll(Numbers* &objectArray, int arrSize)                // удаление массива
+void deleteAll(Numbers** &arrPtr)              // удаление массива
 {
-    for (int i = 0; i<arrSize; i++)
+    for (int i = 0; i<Complex::getSize(); i++)
     {
-        Complex::del(objectArray+i);                           // удаление объектов массива
+        Complex::del(i);                                        // удаление объектов массива
     }
-    delete[] objectArray;                                       // удаление массива
+    delete[] arrPtr;                                       // удаление массива
     cout<<"Массив удалён"<<endl;
-    //_getch();
     return;
 }
