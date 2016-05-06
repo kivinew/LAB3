@@ -2,14 +2,14 @@
 
 #include "Numbers.h"
 
-class Complex: public Numbers
+class Complex: virtual public Numbers
 {
     const double static pi;
     static int counter;                                         // счЄтчик объектов
     static int num;                                             // 
     int objNum;                                                 // номер объекта
     double real, image;
-    static Numbers** arrPointers;                               // объ€вление массива указателей
+    static Numbers* arrPointers;                               // объ€вление массива указателей
     static int arrSize;                                         // размер массива
 
 public:
@@ -22,11 +22,11 @@ public:
     /*-----------------------------------------------------*/
     static void setSize();
     static int getSize();
-    static Numbers** getArray();
-    static Numbers* add();
-    static void del(Numbers* &);
-    static void grow(Numbers** &, int &);
-    static void createObj(Numbers** &, int &, int elementNumber=0);
+    static Numbers* getArray();
+    static Complex add();
+    static void del(Numbers*);
+    //static void grow(Complex* &, int);
+    static void createObj(Numbers* &, int &, int elementNumber=0);
     virtual void edit();
     virtual void show();
     static int getCounter();

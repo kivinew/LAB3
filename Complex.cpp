@@ -4,7 +4,7 @@ int Complex::counter;
 int Complex::num;
 double const Complex::pi = 3.1415926536;
 int Complex::arrSize;
-Numbers** Complex::arrPointers = new Numbers*;
+Numbers* Complex::arrPointers = new Complex;
 
 Complex::Complex(): real(0.), image(0.)                                 // конструктор по умолчанию
 {
@@ -43,7 +43,7 @@ int Complex::getSize()                                                  // ве�
     return arrSize;
 }
 
-Numbers** Complex::getArray()                                           // вернуть массив
+Numbers* Complex::getArray()                                           // вернуть массив
 {
     return arrPointers;
 }
@@ -58,16 +58,16 @@ int Complex::getNum()                                                   // во�
     return objNum;
 }
 
-void Complex::createObj(Numbers** &arr, int &size, int elementNumber)        // создать объект
+void Complex::createObj(Numbers* &arr, int &size, int elementNumber)        // создать объект
 {
-    if (Complex::getCounter()==size)                                // если количество объектов равно размеру массива
-        Complex::grow(arrPointers, arrSize);                                   // то его нужно увеличить
+    if (Complex::getCounter()==size)                                        // если количество объектов равно размеру массива
+        //Complex::grow(arrPointers, arrSize);                              // то его нужно увеличить
     for (int i = elementNumber; i<size; i++)
     {
-        if (arr[i]==NULL)                          	                // если указатель нулевой, то
-        {                                                           // 
-            arr[i] = Complex::add();                                // создать в этой ячейке объект
-            arr[i]->edit();
+        if (arr+i == NULL)                          	                    // если указатель нулевой, то
+        {                                                                   // 
+            arr[i] = Complex::add();                                        // создать в этой ячейке объект
+            arr[i].edit();
             return;
         }
     }
@@ -80,37 +80,36 @@ void Complex::edit()                                                // реда�
     return;
 }
 
-Numbers* Complex::add()                             // создать указатель типа Numbers
+Complex Complex::add()                             // создать указатель типа Numbers
 {                                                   // на объект типа Complex
-    Numbers* newPtr = new Complex(1,1);
-    return newPtr;
+    Complex* newPtr = new Complex(1.,1.);
+    return *newPtr;
 }
 
-void Complex::del(Numbers* &obj)                                        // удаление объекта
+void Complex::del(Numbers* obj)                                        // удаление объекта
 {
     delete obj;
     obj = NULL;
     return;
 }
 
-void Complex::grow(Numbers** &arr, int &size)       // увеличение массива указателей в два раза
-{
-    int newSize;                                    // новый размер массива
-    newSize = size*2;
-    Numbers** newArr;                               // новый массив
-    newArr = new Numbers*[newSize];
-    for (int i = 0; i<newSize; i++)
-    {
-        if (i<size)                                 // значения элементов старого массива
-            newArr[i] = arr[i];                     // присваиваем элементам нового
-        else
-            newArr[i] = NULL;
-    }
-    delete[] arr;                                   // удалён старый массив
-    arr = newArr;                                   // и его указателю присвоен новый
-    size = newSize;
-    return;
-}
+//void Complex::grow(Complex* &arr, int size)       // увеличение массива указателей в два раза
+//{
+//    int newSize;                                    // новый размер массива
+//    newSize = size*2;
+//    Complex* newArr = new Complex[newSize];         // новый массив
+//    for (int i = 0; i<newSize; i++)
+//    {
+//        if (i<size)                                 // значения элементов старого массива
+//            newArr[i] = arr[i];                     // присваиваем элементам нового
+//        else
+//            newArr[i] = NULL;
+//    }
+//    delete[] arr;                                   // удалён старый массив
+//    arr = newArr;                                   // и его указателю присвоен новый
+//    size = newSize;
+//    return;
+//}
 
 void Complex::show()                                              // вывод объекта
 {
