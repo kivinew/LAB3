@@ -1,4 +1,4 @@
-/* Динамический полиморфизм.*/
+/* Динамический полиморфизм */
 
 #include "Complex.h"
 #include <locale>
@@ -10,12 +10,12 @@
 #define DEL         83 
 
 int menu();
-void createTable(Numbers** &);
-void showTable(Numbers** &);
-void deleteAll(Numbers** &);
+void createTable();
+void showTable();
+void deleteAll();
 
-Numbers** arrPtr = Complex::getArr();
-int arrSize = Complex::getSize();
+Numbers** arrPtr = Complex::getArr();           // получаем массив
+int arrSize = Complex::getSize();               // и его размер
 
 int main()
 {
@@ -27,27 +27,24 @@ int main()
     return 0;
 }
 
-int menu()                                 // вывод таблицы объектов и меню
+int menu()                                      // вывод таблицы объектов и меню
 {
     int countObjects = Complex::getCounter();
     system("cls");
     Complex::setSize();
-    createTable(arrPtr);
-    showTable(arrPtr);
-
-    cout<<"\t1        - быстрая вставка объекта в пустую строку"<<endl                     // меню
-        <<"\tENTER    - выбрать элемент таблицы"<<endl
+    createTable();
+    cout<<"\tENTER    - выбор элемента"
         <<"\tESC      - выход из программы"<<endl;
     while (!_kbhit());
     int choice;
     choice = _getch();
     switch (choice)
     {
-    case ONE:                                                           // ---------вставить объект---------
+    case ONE:                                   // ---------вставить объект---------
     {
         break;
     }
-    case ENTER:                                                         // --------выбрать один элемент---------
+    case ENTER:                                 // --------выбрать один элемент---------
     {
         int number;
         cout<<"Укажите номер строки: ";
@@ -61,18 +58,18 @@ int menu()                                 // вывод таблицы объектов и меню
                     <<"SPACEBAR - скопировать комплексное число"<<endl;
             }
             cout<<"Для отмены нажмите любую другую клавишу"<<endl;
-            while (!_kbhit());                                                  // ожидание выбора клавиши
-            choice = _getch();                                                  // вызывается дважды!!!  1) получаем символ
-            if (choice>83) choice = _getch();                                   //                       2) получаем код символа
+            while (!_kbhit());                  // ожидание выбора клавиши
+            choice = _getch();                  // вызывается дважды!!!  1) получаем символ
+            if (choice>83) choice = _getch();   //                       2) получаем код символа
             switch (choice)
             {
-            case ENTER:                                                 // ------изменить объект-------
-                if (arrPtr[number]!=NULL)                           // если указатель не равер нулю
-                    arrPtr[number]->edit();                        // то его можно изменить,
-                else                                                    //
-                    Complex::add();                                     // а иначе создать
+            case ENTER:                         // ------изменить объект-------
+                if (arrPtr[number]!=NULL)       // если указатель не равер нулю
+                    arrPtr[number]->edit();     // то его можно изменить,
+                else                            //
+                    Complex::add();             // а иначе создать
                 break;
-            case DEL:                                                   // --------удаление указателя на объект---------
+            case DEL:                           // --------удаление указателя на объект---------
                 Complex::del(number);
                 break;
             }
@@ -80,12 +77,13 @@ int menu()                                 // вывод таблицы объектов и меню
         else
         {
             cout<<"Выход за пределы массива!";
+            cout<<"arrSize="<<arrSize;
             _getch();
         }
         break;
     }
-    case ESC:                                                               // ---------выход из программы---------
-        deleteAll(arrPtr);
+    case ESC:                                   // ---------выход из программы---------
+        deleteAll();
         return FALSE;
         break;
     }
@@ -95,19 +93,19 @@ int menu()                                 // вывод таблицы объектов и меню
 void createTable()
 {
     for (int i = 0; i<arrSize; i++)
-        arrPtr[i] = Complex::add();
+        Complex::add();
     return;
 }
 
-void showTable()                            // вывод таблицы объектов
+void showTable()                                // вывод таблицы объектов
 {
     cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
     for (int i = 0; i<arrSize; i++)
     {
         cout<<i<<": ";
-        if (arrPtr[i]!=NULL)                // если указатель не равен нулю
+        if (arrPtr[i]!=NULL)                    // если указатель не равен нулю
         {
-            arrPtr[i]->show();              // то выводим объект
+            arrPtr[i]->show();                  // то выводим объект
         }
         else
             cout<<"empty"<<endl;
@@ -115,13 +113,13 @@ void showTable()                            // вывод таблицы объектов
     return;
 }
 
-void deleteAll(Numbers** &arrPtr)              // удаление массива
+void deleteAll()                                // удаление массива
 {
     for (int i = 0; i<Complex::getSize(); i++)
     {
-        Complex::del(i);                                        // удаление объектов массива
+        Complex::del(i);                        // удаление объектов массива
     }
-    delete[] arrPtr;                                       // удаление массива
+    delete[] arrPtr;                            // удаление массива
     cout<<"Массив удалён"<<endl;
     return;
 }

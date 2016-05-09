@@ -1,9 +1,9 @@
 ﻿#include "comPlex.h"
 
-Numbers** Complex::arrPtr;
+Numbers** Complex::arrPtr = new Numbers*[1];
 int Complex::arrSize;
 int Complex::counter;
-double const Complex::pi = 3.1415926536;
+const double Complex::pi = 3.1415926536;
 
 Complex::Complex(): real(0.), image(0.)                                         // конструктор по умолчанию
 {
@@ -37,7 +37,29 @@ Numbers** Complex::getArr()
 
 void Complex::setSize()
 {
+    int t;
     cout<<"Введите размер массива: ";
+    cin>>t;
+    arrSize = t;
+    return;
+}
+
+void Complex::reSize()
+{
+    int newSize;                                    // новый размер массива
+    newSize = arrSize*2;
+    Numbers** newArr;                               // новый массив
+    newArr = new Numbers*[newSize];
+    for (int i = 0; i<newSize; i++)
+    {
+        if (i<arrSize)                                 // значения элементов старого массива
+            *newArr[i] = *arrPtr[i];                     // присваиваем элементам нового
+        else
+            newArr[i] = NULL;
+    }
+    delete[] arrPtr;                                  // удалён старый массив
+    arrPtr = newArr;                                   // и его указателю присвоен новый
+    arrSize = newSize;
     return;
 }
 
@@ -46,10 +68,11 @@ int Complex::getSize()
     return arrSize;
 }
 
-Complex* Complex::add()
+void Complex::add()
 {
     Complex* ptr = new Complex(-1,-1);
-    return ptr;
+    arrPtr[counter] = ptr;
+    return ;
 }
 
 void Complex::edit()
