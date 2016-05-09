@@ -1,9 +1,9 @@
 ﻿#include "comPlex.h"
 
-Numbers** Complex::arrPtr = new Numbers*[1];
+Numbers** Complex::arrPtr;
 int Complex::arrSize;
 int Complex::counter;
-const double Complex::pi = 3.1415926536;
+const double Complex::pi = 3.14159265359;
 
 Complex::Complex(): real(0.), image(0.)                                         // конструктор по умолчанию
 {
@@ -23,11 +23,23 @@ Complex::Complex(const Complex &obj) : real(obj.real), image(obj.image)         
 Complex::~Complex()                                                             // деструктор
 {
     counter--;
+    cout<<"Complex destructor";
 }
 
 int Complex::getCounter()                                                       // возврат счётчика
 {
     return counter;
+}
+
+void Complex::createArr()
+{
+    arrPtr = new Numbers*[arrSize];
+    for (int i = 0; i<arrSize; i++)
+    {
+        add();
+        arrPtr[i]->show();
+    }
+    return;
 }
 
 Numbers** Complex::getArr()
@@ -37,10 +49,8 @@ Numbers** Complex::getArr()
 
 void Complex::setSize()
 {
-    int t;
     cout<<"Введите размер массива: ";
-    cin>>t;
-    arrSize = t;
+    cin>>arrSize;
     return;
 }
 
@@ -53,7 +63,7 @@ void Complex::reSize()
     for (int i = 0; i<newSize; i++)
     {
         if (i<arrSize)                                 // значения элементов старого массива
-            *newArr[i] = *arrPtr[i];                     // присваиваем элементам нового
+            newArr[i] = arrPtr[i];                     // присваиваем элементам нового
         else
             newArr[i] = NULL;
     }
@@ -70,8 +80,7 @@ int Complex::getSize()
 
 void Complex::add()
 {
-    Complex* ptr = new Complex(-1,-1);
-    arrPtr[counter] = ptr;
+    arrPtr[counter] = new Complex;
     return ;
 }
 
@@ -105,6 +114,7 @@ void Complex::showAll()
 {
     for (int i = 0; i<arrSize; i++)
         arrPtr[i]->show();
+    return;
 }
 
 double Complex::mod()                                                   // ìîäóëü |Z|
@@ -126,7 +136,7 @@ double Complex::arg()                                                   // àð�
         if (image>0) return pi/2;
         if (image<0) return -pi/2;
     }
-    return 0;
+    return 0.;
 }
 
 ostream & operator << (ostream &out, Complex &obj)                              // cout<<

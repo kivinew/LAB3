@@ -1,7 +1,8 @@
 /* ÏĞÎÈÇÂÎÄÍÛÉ ÊËÀÑÑ */
+#pragma once
 #include "Numbers.h"
 
-class Complex: virtual public Numbers
+class Complex: public Numbers
 {
     static Numbers** arrPtr;
     static int arrSize;
@@ -16,6 +17,7 @@ public:
 
     double mod();
     double arg();
+    static void createArr();
     static Numbers** getArr();
     static void setSize();
     static int getSize();
@@ -26,6 +28,7 @@ public:
     static void showAll();
     static void del(int num);
     static int getCounter();
+
 
     friend ostream & operator << (ostream &out, Complex &obj);
     friend istream & operator >> (istream &in, Complex &obj);

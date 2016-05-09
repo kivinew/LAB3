@@ -10,12 +10,11 @@
 #define DEL         83 
 
 int menu();
-void createTable();
 void showTable();
 void deleteAll();
 
-Numbers** arrPtr = Complex::getArr();           // получаем массив
-int arrSize = Complex::getSize();               // и его размер
+Numbers** arrPtr;                  // ^^^^^^^^^^^^^ массив
+int arrSize;
 
 int main()
 {
@@ -23,6 +22,10 @@ int main()
     SetConsoleTitleA("Complex numbers. LAB3");
 
     system("cls");
+
+    Complex::setSize();
+    arrPtr = Complex::getArr();
+    arrSize = Complex::getSize();
     while (menu()==TRUE);
     return 0;
 }
@@ -31,8 +34,8 @@ int menu()                                      // вывод таблицы объектов и меню
 {
     int countObjects = Complex::getCounter();
     system("cls");
-    Complex::setSize();
-    createTable();
+    Complex::createArr();
+    showTable();
     cout<<"\tENTER    - выбор элемента"
         <<"\tESC      - выход из программы"<<endl;
     while (!_kbhit());
@@ -90,13 +93,6 @@ int menu()                                      // вывод таблицы объектов и меню
     return TRUE;
 }
 
-void createTable()
-{
-    for (int i = 0; i<arrSize; i++)
-        Complex::add();
-    return;
-}
-
 void showTable()                                // вывод таблицы объектов
 {
     cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
@@ -119,7 +115,7 @@ void deleteAll()                                // удаление массива
     {
         Complex::del(i);                        // удаление объектов массива
     }
-    delete[] arrPtr;                            // удаление массива
+    delete[] arrPtr;                              // удаление массива
     cout<<"Массив удалён"<<endl;
     return;
 }
