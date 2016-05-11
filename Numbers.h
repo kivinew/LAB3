@@ -1,4 +1,4 @@
-/* аюгнбши йкюяя */
+/* юаярпюйрмши аюгнбши йкюяя */
 #pragma once
 #include <iostream>
 #include <conio.h>

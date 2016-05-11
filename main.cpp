@@ -13,7 +13,7 @@ int menu();
 void showTable();
 void deleteAll();
 
-Numbers** arrPtr;                  // ^^^^^^^^^^^^^ массив
+Numbers** arrayPtr;                  // ^^^^^^^^^^^^^ массив
 int arrSize;
 
 int main()
@@ -24,7 +24,8 @@ int main()
     system("cls");
 
     Complex::setSize();
-    arrPtr = Complex::getArr();
+    Complex::createArr();
+    arrayPtr = Complex::getArr();
     arrSize = Complex::getSize();
     while (menu()==TRUE);
     return 0;
@@ -34,7 +35,6 @@ int menu()                                      // вывод таблицы объектов и меню
 {
     int countObjects = Complex::getCounter();
     system("cls");
-    Complex::createArr();
     showTable();
     cout<<"\tENTER    - выбор элемента"
         <<"\tESC      - выход из программы"<<endl;
@@ -55,7 +55,7 @@ int menu()                                      // вывод таблицы объектов и меню
         if (!(number>=arrSize)&&!(number<0))
         {
             cout<<endl<<"ENTER    - ввести данные комплексного числа"<<endl;
-            if (arrPtr[number]!=NULL)
+            if (arrayPtr[number]!=NULL)
             {
                 cout<<"DELETE   - удалить комплексное число"<<endl
                     <<"SPACEBAR - скопировать комплексное число"<<endl;
@@ -67,8 +67,8 @@ int menu()                                      // вывод таблицы объектов и меню
             switch (choice)
             {
             case ENTER:                         // ------изменить объект-------
-                if (arrPtr[number]!=NULL)       // если указатель не равер нулю
-                    arrPtr[number]->edit();     // то его можно изменить,
+                if (arrayPtr[number]!=NULL)       // если указатель не равер нулю
+                    arrayPtr[number]->edit();     // то его можно изменить,
                 else                            //
                     Complex::add();             // а иначе создать
                 break;
@@ -99,9 +99,11 @@ void showTable()                                // вывод таблицы объектов
     for (int i = 0; i<arrSize; i++)
     {
         cout<<i<<": ";
-        if (arrPtr[i]!=NULL)                    // если указатель не равен нулю
+        if (arrayPtr[i]!=NULL)                    // если указатель не равен нулю
         {
-            arrPtr[i]->show();                  // то выводим объект
+            ((Complex*)arrayPtr[i])->show(); 
+            
+            //arrayPtr[i]->show();                  // то выводим объект
         }
         else
             cout<<"empty"<<endl;
@@ -115,7 +117,7 @@ void deleteAll()                                // удаление массива
     {
         Complex::del(i);                        // удаление объектов массива
     }
-    delete[] arrPtr;                              // удаление массива
+    delete[] arrayPtr;                              // удаление массива
     cout<<"Массив удалён"<<endl;
     return;
 }

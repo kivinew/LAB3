@@ -37,7 +37,6 @@ void Complex::createArr()
     for (int i = 0; i<arrSize; i++)
     {
         add();
-        arrPtr[i]->show();
     }
     return;
 }
