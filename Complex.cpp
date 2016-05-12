@@ -23,7 +23,6 @@ Complex::Complex(const Complex &obj) : real(obj.real), image(obj.image)         
 Complex::~Complex()                                                             // деструктор
 {
     counter--;
-    cout<<"Complex destructor\n";
 }
 
 int Complex::getCounter()                                                       // возврат счётчика
@@ -37,7 +36,6 @@ void Complex::createArr()
     for (int i = 0; i<arrSize; i++)
     {
         arrPtr[i] = NULL;
-        //dynamic_cast <Complex*>(arrPtr[i])->add();
     }
     return;
 }
@@ -78,19 +76,19 @@ int Complex::getSize()
     return arrSize;
 }
 
-void Complex::add(int num)
+void Complex::add(int num)                                      // добавление объекта Complex
 {
     arrPtr[num] = new Complex(1,1);
     return;
 }
 
-void Complex::edit()
+void Complex::edit()                                            // (virtual)
 {
     cin>>*this;
     return;
 }
 
-void Complex::del(int num)                                        // удаление объекта
+void Complex::del(int num)                                      // удаление объекта
 {
     if (arrPtr[num]!=NULL)
     {
@@ -100,24 +98,29 @@ void Complex::del(int num)                                        // удале�
     return;
 }
 
-void Complex::show()                                              // вывод объекта
+void Complex::show()                                            // вывод объекта (virtual)
 {
-    cout<<"Z="<<real<<"+"<<image<<"*i"<<"\t"<<"|Z|="<<mod()<<"\t";
-    if (arg()!=0)
-        cout<<"arg Z="<<arg()*180/pi<<"\t"<<endl;
-    else
-        cout<<"n/a"<<endl;
+    cout<<*this;
     return;
 }
 
 void Complex::showAll()
 {
+    cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
     for (int i = 0; i<arrSize; i++)
-        arrPtr[i]->show();
+    {
+        cout<<i<<": ";
+        if (arrPtr[i]!=NULL)                                    // если указатель не равен нулю
+        {
+            arrPtr[i]->show();                                  // то выводим объект
+        }
+        else
+            cout<<"empty"<<endl;
+    }
     return;
 }
 
-double Complex::mod()                                                   // ìîäóëü |Z|
+double Complex::mod()                                           // Модуль |Z|
 {
     return sqrt(real*real+image*image);
 }
@@ -139,13 +142,17 @@ double Complex::arg()                                                   // àð�
     return 0.;
 }
 
-ostream & operator << (ostream &out, Complex &obj)                              // cout<<
+ostream & operator << (ostream &out, Complex &obj)              // cout<<
 {
-    out<<"Z = "<<obj.real<<" + "<<obj.image<<"i      ";
+    out<<"Z="<<obj.real<<"+"<<obj.image<<"*i"<<"\t"<<"|Z|="<<obj.mod()<<"\t";
+    if (obj.arg()!=0)
+        out<<"arg Z="<<obj.arg()*180/obj.pi<<"\t\n";
+    else
+        out<<"\t"<<"n/a"<<endl;
     return out;
 }
 
-istream & operator>>(istream &in, Complex &obj)                                 // cin>>
+istream & operator>>(istream &in, Complex &obj)                 // cin>>
 {
     cout<<"введите real =     \b\b\b\b";
     in>>obj.real;

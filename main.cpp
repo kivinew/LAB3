@@ -10,7 +10,6 @@
 #define DEL         83 
 
 int menu();
-void showTable();
 void deleteAll();
 
 Numbers** arrayPtr;                  // ^^^^^^^^^^^^^ массив
@@ -35,7 +34,7 @@ int menu()                                      // вывод таблицы объектов и меню
 {
     int countObjects = Complex::getCounter();
     system("cls");
-    showTable();
+    Complex::showAll();
     cout<<"\tENTER    - выбор элемента"
         <<"\tESC      - выход из программы"<<endl;
     while (!_kbhit());
@@ -68,9 +67,9 @@ int menu()                                      // вывод таблицы объектов и меню
             {
             case ENTER:                         // ------изменить объект-------
                 if (arrayPtr[number]!=NULL)     // если указатель не равер нулю
-                    dynamic_cast <Complex*>(arrayPtr[number])->edit();   // то его можно изменить,
+                    arrayPtr[number]->edit();   // то его можно изменить,
                 else                            // 
-                    dynamic_cast <Complex*>(arrayPtr[number])->add(number);   // а иначе создать
+                    Complex::add(number);       // а иначе создать
                 break;
             case DEL:                           // --------удаление указателя на объект---------
                 Complex::del(number);
@@ -79,8 +78,7 @@ int menu()                                      // вывод таблицы объектов и меню
         }
         else
         {
-            cout<<"Выход за пределы массива!";
-            cout<<"arrSize="<<arrSize;
+            cout<<"Выход за пределы массива!\n";
             _getch();
         }
         break;
@@ -91,22 +89,6 @@ int menu()                                      // вывод таблицы объектов и меню
         break;
     }
     return TRUE;
-}
-
-void showTable()                                // вывод таблицы объектов
-{
-    cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
-    for (int i = 0; i<arrSize; i++)
-    {
-        cout<<i<<": ";
-        if (arrayPtr[i]!=NULL)                  // если указатель не равен нулю
-        {
-            arrayPtr[i]->show();                // то выводим объект
-        }
-        else
-            cout<<"empty"<<endl;
-    }
-    return;
 }
 
 void deleteAll()                                // удаление массива

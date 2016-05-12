@@ -10,7 +10,7 @@ class Numbers
 {
 
 public:
-    virtual ~Numbers() { cout<<"Numbers destructor!\n"<<endl; };
+    virtual ~Numbers() {};
     virtual void edit() = 0;
     virtual void show() = 0;
 };
