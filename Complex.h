@@ -23,8 +23,8 @@ public:
     static int getSize();
     static void reSize();
     static void add(int);
-    void edit();
-    void show();
+    virtual void edit();
+    virtual void show();
     static void showAll();
     static void del(int num);
     static int getCounter();

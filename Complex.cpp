@@ -1,4 +1,4 @@
-﻿#include "comPlex.h"
+#include "comPlex.h"
 
 Numbers** Complex::arrPtr;
 int Complex::arrSize;
@@ -54,19 +54,19 @@ void Complex::setSize()
 
 void Complex::reSize()
 {
-    int newSize;                                    // новый размер массива
-    newSize = arrSize*2;
-    Numbers** newArr;                               // новый массив
+    int newSize;                                                // новый размер массива
+    newSize = arrSize+2;
+    Numbers** newArr;                                           // новый массив
     newArr = new Numbers*[newSize];
     for (int i = 0; i<newSize; i++)
     {
-        if (i<arrSize)                                 // значения элементов старого массива
-            newArr[i] = arrPtr[i];                     // присваиваем элементам нового
+        if (i<arrSize)                                          // значения элементов старого массива
+            newArr[i] = arrPtr[i];                              // присваиваем элементам нового
         else
             newArr[i] = NULL;
     }
-    delete[] arrPtr;                                  // удалён старый массив
-    arrPtr = newArr;                                   // и его указателю присвоен новый
+    delete[] arrPtr;                                            // удалён старый массив
+    arrPtr = newArr;                                            // и его указателю присвоен новый
     arrSize = newSize;
     return;
 }
@@ -98,7 +98,7 @@ void Complex::del(int num)                                      // удален�
     return;
 }
 
-void Complex::show()                                            // вывод объекта (virtual)
+void Complex::show()                                            // (virtual)
 {
     cout<<*this;
     return;
