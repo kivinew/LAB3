@@ -5,7 +5,7 @@ int Complex::arrSize;
 int Complex::counter;
 const double Complex::pi = 3.14159265359;
 
-Complex::Complex(): real(0.), image(0.)                                         // конструктор по умолчанию
+Complex::Complex(): real(0.1), image(0.2)                                         // конструктор по умолчанию
 {
     counter++;
 }
@@ -23,7 +23,7 @@ Complex::Complex(const Complex &obj) : real(obj.real), image(obj.image)         
 Complex::~Complex()                                                             // деструктор
 {
     counter--;
-    cout<<"Complex destructor";
+    cout<<"Complex destructor\n";
 }
 
 int Complex::getCounter()                                                       // возврат счётчика
@@ -36,7 +36,8 @@ void Complex::createArr()
     arrPtr = new Numbers*[arrSize];
     for (int i = 0; i<arrSize; i++)
     {
-        add();
+        arrPtr[i] = NULL;
+        //dynamic_cast <Complex*>(arrPtr[i])->add();
     }
     return;
 }
@@ -77,10 +78,10 @@ int Complex::getSize()
     return arrSize;
 }
 
-void Complex::add()
+void Complex::add(int num)
 {
-    arrPtr[counter] = new Complex;
-    return ;
+    arrPtr[num] = new Complex(1,1);
+    return;
 }
 
 void Complex::edit()

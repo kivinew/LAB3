@@ -67,10 +67,10 @@ int menu()                                      // вывод таблицы объектов и меню
             switch (choice)
             {
             case ENTER:                         // ------изменить объект-------
-                if (arrayPtr[number]!=NULL)       // если указатель не равер нулю
-                    arrayPtr[number]->edit();     // то его можно изменить,
-                else                            //
-                    Complex::add();             // а иначе создать
+                if (arrayPtr[number]!=NULL)     // если указатель не равер нулю
+                    dynamic_cast <Complex*>(arrayPtr[number])->edit();   // то его можно изменить,
+                else                            // 
+                    dynamic_cast <Complex*>(arrayPtr[number])->add(number);   // а иначе создать
                 break;
             case DEL:                           // --------удаление указателя на объект---------
                 Complex::del(number);
@@ -99,11 +99,9 @@ void showTable()                                // вывод таблицы объектов
     for (int i = 0; i<arrSize; i++)
     {
         cout<<i<<": ";
-        if (arrayPtr[i]!=NULL)                    // если указатель не равен нулю
+        if (arrayPtr[i]!=NULL)                  // если указатель не равен нулю
         {
-            ((Complex*)arrayPtr[i])->show(); 
-            
-            //arrayPtr[i]->show();                  // то выводим объект
+            arrayPtr[i]->show();                // то выводим объект
         }
         else
             cout<<"empty"<<endl;
@@ -113,11 +111,12 @@ void showTable()                                // вывод таблицы объектов
 
 void deleteAll()                                // удаление массива
 {
-    for (int i = 0; i<Complex::getSize(); i++)
+    int size = Complex::getSize();
+    for (int i = 0; i<size; i++)
     {
         Complex::del(i);                        // удаление объектов массива
     }
-    delete[] arrayPtr;                              // удаление массива
+    delete[] arrayPtr;                          // удаление массива
     cout<<"Массив удалён"<<endl;
     return;
 }

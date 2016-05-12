@@ -22,13 +22,12 @@ public:
     static void setSize();
     static int getSize();
     static void reSize();
-    static void add();
+    static void add(int);
     void edit();
     void show();
     static void showAll();
     static void del(int num);
     static int getCounter();
-
 
     friend ostream & operator << (ostream &out, Complex &obj);
     friend istream & operator >> (istream &in, Complex &obj);
