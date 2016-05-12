@@ -1,4 +1,4 @@
-#include "comPlex.h"
+﻿#include "comPlex.h"
 
 Numbers** Complex::arrPtr;
 int Complex::arrSize;
