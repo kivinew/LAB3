@@ -17,18 +17,18 @@ public:
 
     double mod();
     double arg();
-    static void createArr();
-    static Numbers** getArr();
     static void setSize();
+    static void createArr();
     static int getSize();
     static void reSize();
+    static Numbers** getArr();
     static void add(int);
     virtual void edit();
     virtual void show();
-    static void showAll();
+    static void showTable();
     static void del(int num);
     static int getCounter();
 
     friend ostream & operator << (ostream &out, Complex &obj);
-    friend istream & operator >> (istream &in, Complex &obj);
+    friend istream & operator>>(istream &in, Complex &obj);
 };

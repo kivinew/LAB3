@@ -12,67 +12,72 @@
 int menu();
 void deleteAll();
 
-Numbers** arrayPtr;                  // ^^^^^^^^^^^^^ массив
-int arrSize;
+Numbers** arrPointer;                             //                                 массив
+int arrSize;                                    //                           и его размер
 
 int main()
 {
     setlocale(LC_ALL, "Ru");
     SetConsoleTitleA("Complex numbers. LAB3");
-
     system("cls");
 
     Complex::setSize();
     Complex::createArr();
-    arrayPtr = Complex::getArr();
-    arrSize = Complex::getSize();
     while (menu()==TRUE);
     return 0;
 }
 
-int menu()                                      // вывод таблицы объектов и меню
+int menu()                                      //         вывод таблицы объектов и меню
 {
+    arrPointer = Complex::getArr();
+    arrSize = Complex::getSize();
     int countObjects = Complex::getCounter();
     system("cls");
-    Complex::showAll();
-    cout<<"\tENTER    - выбор элемента"
-        <<"\tESC      - выход из программы"<<endl;
-    while (!_kbhit());
+    Complex::showTable();
+    cout<<"\t1          быстрая вставка объекта в пустую строку"<<endl
+        <<"\tENTER      выбор элемента"<<endl
+        <<"\tESC        выход из программы"<<endl;
+    while (!_kbhit());                          //               ожидание выбора клавиши
     int choice;
     choice = _getch();
     switch (choice)
     {
-    case ONE:                                   // ---------вставить объект---------
+    case ONE:                                   //                       быстрая вставка
     {
+        for (int i = 0; i<arrSize; i++)
+        {
+            if (arrPointer[i]==NULL)
+            {
+                Complex::add(i);                //                       добавить объект
+                return TRUE;
+            }
+        }
         break;
     }
-    case ENTER:                                 // --------выбрать один элемент---------
+    case ENTER:                                 //                  выбрать один элемент
     {
         int number;
         cout<<"Укажите номер строки: ";
         cin>>number;
-        if (!(number>=arrSize)&&!(number<0))
+        if (!(number>=arrSize)&&!(number<0))    //  проверка на выход за пределы массива
         {
-            cout<<endl<<"ENTER    - ввести данные комплексного числа"<<endl;
-            if (arrayPtr[number]!=NULL)
-            {
-                cout<<"DELETE   - удалить комплексное число"<<endl
-                    <<"SPACEBAR - скопировать комплексное число"<<endl;
-            }
+            cout<<endl<<"ENTER      ввести данные комплексного числа"<<endl;
+            if (arrPointer[number]!=NULL)
+                cout<<"DELETE     удалить комплексное число"<<endl;
             cout<<"Для отмены нажмите любую другую клавишу"<<endl;
-            while (!_kbhit());                  // ожидание выбора клавиши
-            choice = _getch();                  // вызывается дважды!!!  1) получаем символ
-            if (choice>83) choice = _getch();   //                       2) получаем код символа
+            while (!_kbhit());                  //               ожидание выбора клавиши
+            choice = _getch();                  // getch()x2 !!! 1) получаем символ
+            if (choice>83) choice = _getch();   //               2) получаем код символа
             switch (choice)
             {
-            case ENTER:                         // ------изменить объект-------
-                if (arrayPtr[number]!=NULL)     // если указатель не равер нулю
-                    arrayPtr[number]->edit();   // то его можно изменить,
+            case ENTER:                         //                       изменить объект
+                if (arrPointer[number]!=NULL)   //          если указатель не равер нулю
+                    arrPointer[number]->edit(); //                то его можно изменить,
                 else                            // 
-                    Complex::add(number);       // а иначе создать
+                    Complex::add(number);       //                       а иначе создать
                 break;
-            case DEL:                           // --------удаление указателя на объект---------
-                Complex::del(number);
+            case DEL:                           //          удаление указателя на объект
+                Complex::del(number);           //           без проверки на его наличие
                 break;
             }
         }
@@ -83,22 +88,22 @@ int menu()                                      // вывод таблицы о�
         }
         break;
     }
-    case ESC:                                   // ---------выход из программы---------
-        deleteAll();
+    case ESC:                                   //                    выход из программы
+        deleteAll();                            //             с удалением всего массива
         return FALSE;
         break;
     }
     return TRUE;
 }
 
-void deleteAll()                                // удаление массива
+void deleteAll()                                //                      удаление массива
 {
     int size = Complex::getSize();
     for (int i = 0; i<size; i++)
     {
-        Complex::del(i);                        // удаление объектов массива
+        Complex::del(i);                        //             удаление объектов массива
     }
-    delete[] arrayPtr;                          // удаление массива
+    delete[] arrPointer;                          //                    удаление массива
     cout<<"Массив удалён"<<endl;
     return;
 }

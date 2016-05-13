@@ -5,44 +5,29 @@ int Complex::arrSize;
 int Complex::counter;
 const double Complex::pi = 3.14159265359;
 
-Complex::Complex(): real(0.1), image(0.2)                                         // конструктор по умолчанию
+Complex::Complex(): real(0.1), image(0.2)                                       // конструктор по умолчанию
 {
     counter++;
 }
 
-Complex::Complex(double re, double im) : real(re), image(im)                     // конструктор с параметрами
+Complex::Complex(double re, double im) : real(re), image(im)                    // конструктор с параметрами
 {
     counter++;
 }
 
-Complex::Complex(const Complex &obj) : real(obj.real), image(obj.image)          // конструктор копирования
+Complex::Complex(const Complex &obj) : real(obj.real), image(obj.image)         //   конструктор копирования
 {
     counter++;
 }
 
-Complex::~Complex()                                                             // деструктор
+Complex::~Complex()                                                             //                деструктор
 {
-    counter--;
+    counter  ;
 }
 
-int Complex::getCounter()                                                       // возврат счётчика
+int Complex::getCounter()                                                       //          возврат счётчика
 {
     return counter;
-}
-
-void Complex::createArr()
-{
-    arrPtr = new Numbers*[arrSize];
-    for (int i = 0; i<arrSize; i++)
-    {
-        arrPtr[i] = NULL;
-    }
-    return;
-}
-
-Numbers** Complex::getArr()
-{
-    return arrPtr;
 }
 
 void Complex::setSize()
@@ -52,21 +37,31 @@ void Complex::setSize()
     return;
 }
 
+void Complex::createArr()                                       //          создание массива указателей
+{
+    arrPtr = new Numbers*[arrSize];
+    for (int i = 0; i<arrSize; i++)
+    {
+        arrPtr[i] = NULL;                                       //              инициализация указателя
+    }
+    return;
+}
+
 void Complex::reSize()
 {
-    int newSize;                                                // новый размер массива
-    newSize = arrSize+2;
-    Numbers** newArr;                                           // новый массив
+    int newSize;                                                //                 новый размер массива
+    newSize = arrSize+3;
+    Numbers** newArr;                                           //                         новый массив
     newArr = new Numbers*[newSize];
     for (int i = 0; i<newSize; i++)
     {
-        if (i<arrSize)                                          // значения элементов старого массива
-            newArr[i] = arrPtr[i];                              // присваиваем элементам нового
+        if (i<arrSize)                                          //   значения элементов старого массива
+            newArr[i] = arrPtr[i];                              //         присваиваем элементам нового
         else
             newArr[i] = NULL;
     }
-    delete[] arrPtr;                                            // удалён старый массив
-    arrPtr = newArr;                                            // и его указателю присвоен новый
+    delete arrPtr;                                              //                 удалён старый массив
+    arrPtr = newArr;                                            //       и его указателю присвоен новый
     arrSize = newSize;
     return;
 }
@@ -76,21 +71,28 @@ int Complex::getSize()
     return arrSize;
 }
 
-void Complex::add(int num)                                      // добавление объекта Complex
+Numbers** Complex::getArr()
 {
-    arrPtr[num] = new Complex(1,1);
+    return arrPtr;
+}
+
+void Complex::add(int num)                                      //           добавление объекта Complex
+{
+    if (counter+1 == arrSize)                                   // проверка на необходимость увеличения
+        reSize();                                               //                              массива
+    arrPtr[num] = new Complex(1, 1);
     return;
 }
 
-void Complex::edit()                                            // (virtual)
+void Complex::edit()                                            //  виртуальный метод изменения объекта
 {
     cin>>*this;
     return;
 }
 
-void Complex::del(int num)                                      // удаление объекта
+void Complex::del(int num)                                      //                     удаление объекта
 {
-    if (arrPtr[num]!=NULL)
+    if (arrPtr[num]!=NULL)                                      // обязательная проверка наличия объекта
     {
         delete arrPtr[num];
         arrPtr[num] = NULL;
@@ -98,21 +100,21 @@ void Complex::del(int num)                                      // удален�
     return;
 }
 
-void Complex::show()                                            // (virtual)
+void Complex::show()                                            //     виртуальный метод вывода объекта
 {
     cout<<*this;
     return;
 }
 
-void Complex::showAll()
+void Complex::showTable()                                         //       вызов show() для всех объектов
 {
     cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
     for (int i = 0; i<arrSize; i++)
     {
         cout<<i<<": ";
-        if (arrPtr[i]!=NULL)                                    // если указатель не равен нулю
+        if (arrPtr[i]!=NULL)                                    //         если указатель не равен нулю
         {
-            arrPtr[i]->show();                                  // то выводим объект
+            arrPtr[i]->show();                                  //                    то выводим объект
         }
         else
             cout<<"empty"<<endl;
@@ -120,24 +122,24 @@ void Complex::showAll()
     return;
 }
 
-double Complex::mod()                                           // Модуль |Z|
+double Complex::mod()                                           //                            Модуль |Z|
 {
     return sqrt(real*real+image*image);
 }
 
-double Complex::arg()                                                   // àðãóìåíò arg Z
+double Complex::arg()                                           //                аргумент (угол) arg Z
 {
     if (real>0) return atan(image/real);
     if (real<0)
     {
         if (image>0) return pi+atan(image/real);
-        if (image<0) return -pi+atan(image/real);
+        if (image<0) return  pi+atan(image/real);
         if (image==0) return pi;
     }
     if (real==0)
     {
         if (image>0) return pi/2;
-        if (image<0) return -pi/2;
+        if (image<0) return  pi/2;
     }
     return 0.;
 }
