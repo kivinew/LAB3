@@ -22,7 +22,7 @@ Complex::Complex(const Complex &obj) : real(obj.real), image(obj.image)         
 
 Complex::~Complex()                                                             //                деструктор
 {
-    counter  ;
+    counter--;
 }
 
 int Complex::getCounter()                                                       //          возврат счётчика

@@ -12,7 +12,7 @@
 int menu();
 void deleteAll();
 
-Numbers** arrPointer;                             //                                 массив
+Numbers** arrPointer;                           //                                 массив
 int arrSize;                                    //                           и его размер
 
 int main()
