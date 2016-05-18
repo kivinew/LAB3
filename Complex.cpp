@@ -78,7 +78,7 @@ Numbers** Complex::getArr()
 
 void Complex::add(int num)                                      //           добавление объекта Complex
 {
-    if (counter+1 == arrSize)                                   // проверка на необходимость увеличения
+    if (counter+1==arrSize)                                     // проверка на необходимость увеличения
         reSize();                                               //                              массива
     arrPtr[num] = new Complex(1, 1);
     return;
@@ -154,7 +154,7 @@ ostream & operator << (ostream &out, Complex &obj)              // cout<<
     return out;
 }
 
-istream & operator>>(istream &in, Complex &obj)                 // cin>>
+istream & operator >> (istream &in, Complex &obj)                 // cin>>
 {
     cout<<"введите real =     \b\b\b\b";
     in>>obj.real;

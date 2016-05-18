@@ -12,12 +12,12 @@
 int menu();
 void deleteAll();
 
-Numbers** arrPointer;                           //                                 массив
-int arrSize;                                    //                           и его размер
+Numbers** arrPointer;                           // глабальный массив
+int arrSize;                                    // и его размер
 
 int main()
 {
-    setlocale(LC_ALL, "Ru");
+    setlocale(LC_ALL, "Russian");
     SetConsoleTitleA("Complex numbers. LAB3");
     system("cls");
 
@@ -61,24 +61,36 @@ int menu()                                      //         вывод табли
         cin>>number;
         if (!(number>=arrSize)&&!(number<0))    //  проверка на выход за пределы массива
         {
-            cout<<endl<<"ENTER      ввести данные комплексного числа"<<endl;
-            if (arrPointer[number]!=NULL)
-                cout<<"DELETE     удалить комплексное число"<<endl;
-            cout<<"Для отмены нажмите любую другую клавишу"<<endl;
-            while (!_kbhit());                  //               ожидание выбора клавиши
-            choice = _getch();                  // getch()x2 !!! 1) получаем символ
-            if (choice>83) choice = _getch();   //               2) получаем код символа
-            switch (choice)
+            if (arrPointer[number]==NULL)
             {
-            case ENTER:                         //                       изменить объект
-                if (arrPointer[number]!=NULL)   //          если указатель не равер нулю
-                    arrPointer[number]->edit(); //                то его можно изменить,
-                else                            // 
-                    Complex::add(number);       //                       а иначе создать
-                break;
-            case DEL:                           //          удаление указателя на объект
-                Complex::del(number);           //           без проверки на его наличие
-                break;
+                Complex::add(number);           // 
+                arrPointer = Complex::getArr(); //
+                arrPointer[number]->edit();     // 
+            }
+            else
+            {
+                cout<<endl<<"ENTER      ввести данные комплексного числа"<<endl;
+                cout<<"DELETE     удалить комплексное число"<<endl;
+                cout<<"Для отмены нажмите любую другую клавишу"<<endl;
+                while (!_kbhit());                  //               ожидание выбора клавиши
+                choice = _getch();                  // getch()x2 !!! 1) получаем символ
+                if (choice>83) choice = _getch();   //               2) получаем код символа
+                switch (choice)
+                {
+                case ENTER:                         //                       изменить объект
+                    if (arrPointer[number]!=NULL)   //          если указатель не равер нулю
+                        arrPointer[number]->edit(); //                то его можно изменить,
+                    else                            // 
+                    {
+                        Complex::add(number);       //                       а иначе создать
+                        arrPointer = Complex::getArr();
+                        arrPointer[number]->edit(); //                      и заполнить поля
+                    }
+                    break;
+                case DEL:                           //          удаление указателя на объект
+                    Complex::del(number);           //           без проверки на его наличие
+                    break;
+                }
             }
         }
         else
