@@ -5,7 +5,7 @@ int Complex::arrSize;
 int Complex::counter;
 const double Complex::pi = 3.14159265359;
 
-Complex::Complex(): real(0.1), image(0.2)                                       // конструктор по умолчанию
+Complex::Complex(): real(0.), image(0.)                                         // конструктор по умолчанию
 {
     counter++;
 }
@@ -80,7 +80,7 @@ void Complex::add(int num)                                      //           д�
 {
     if (counter+1==arrSize)                                     // проверка на необходимость увеличения
         reSize();                                               //                              массива
-    arrPtr[num] = new Complex(1, 1);
+    arrPtr[num] = new Complex();
     return;
 }
 

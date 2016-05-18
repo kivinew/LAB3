@@ -48,24 +48,24 @@ int menu()                                      //         вывод табли
         {
             if (arrPointer[i]==NULL)
             {
-                Complex::add(i);                //                       добавить объект
+                Complex::add(i);                //                           добавить объект
                 return TRUE;
             }
         }
         break;
     }
-    case ENTER:                                 //                  выбрать один элемент
+    case ENTER:                                 //                      выбрать один элемент
     {
         int number;
         cout<<"Укажите номер строки: ";
         cin>>number;
-        if (!(number>=arrSize)&&!(number<0))    //  проверка на выход за пределы массива
+        if (!(number>=arrSize)&&!(number<0))    //      проверка на выход за пределы массива
         {
-            if (arrPointer[number]==NULL)
-            {
-                Complex::add(number);           // 
-                arrPointer = Complex::getArr(); //
-                arrPointer[number]->edit();     // 
+            if (arrPointer[number]==NULL)       //                 если объект не определён,
+            {                                   //                                        то 
+                Complex::add(number);           //                   создаём его и обновляем
+                arrPointer = Complex::getArr(); //    массив на случай если он изменился при
+                arrPointer[number]->edit();     //   реСайзе и редактируем полученный объект
             }
             else
             {
