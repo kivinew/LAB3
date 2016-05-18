@@ -13,7 +13,7 @@ public:
     Complex();
     Complex(double, double);
     Complex(const Complex &);
-    virtual ~Complex();
+    ~Complex();
 
     double mod();
     double arg();
@@ -23,12 +23,12 @@ public:
     static void reSize();
     static Numbers** getArr();
     static void add(int);
-    virtual void edit();
-    virtual void show();
+    void edit();
+    void show();
     static void showTable();
     static void del(int num);
     static int getCounter();
 
     friend ostream & operator << (ostream &out, Complex &obj);
-    friend istream & operator>>(istream &in, Complex &obj);
+    friend istream & operator >> (istream &in, Complex &obj);
 };

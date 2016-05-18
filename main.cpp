@@ -12,12 +12,12 @@
 int menu();
 void deleteAll();
 
-Numbers** arrPointer;                           //                                 массив
-int arrSize;                                    //                           и его размер
+Numbers** arrPointer;                           // глабальный массив
+int arrSize;                                    // и его размер
 
 int main()
 {
-    setlocale(LC_ALL, "Ru");
+    setlocale(LC_ALL, "Russian");
     SetConsoleTitleA("Complex numbers. LAB3");
     system("cls");
 
