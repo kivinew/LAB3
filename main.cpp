@@ -27,7 +27,7 @@ int main()
     return 0;
 }
 
-int menu()                                      //         вывод таблицы объектов и меню
+int menu()                                      //             вывод таблицы объектов и меню
 {
     arrPointer = Complex::getArr();
     arrSize = Complex::getSize();
@@ -37,12 +37,12 @@ int menu()                                      //         вывод табли
     cout<<"\t1          быстрая вставка объекта в пустую строку"<<endl
         <<"\tENTER      выбор элемента"<<endl
         <<"\tESC        выход из программы"<<endl;
-    while (!_kbhit());                          //               ожидание выбора клавиши
+    while (!_kbhit());                          //                   ожидание выбора клавиши
     int choice;
     choice = _getch();
     switch (choice)
     {
-    case ONE:                                   //                       быстрая вставка
+    case ONE:                                   //                           быстрая вставка
     {
         for (int i = 0; i<arrSize; i++)
         {
@@ -100,22 +100,22 @@ int menu()                                      //         вывод табли
         }
         break;
     }
-    case ESC:                                   //                    выход из программы
-        deleteAll();                            //             с удалением всего массива
+    case ESC:                                   //                        выход из программы
+        deleteAll();                            //                 с удалением всего массива
         return FALSE;
         break;
     }
     return TRUE;
 }
 
-void deleteAll()                                //                      удаление массива
+void deleteAll()                                //                          удаление массива
 {
     int size = Complex::getSize();
     for (int i = 0; i<size; i++)
     {
         Complex::del(i);                        //             удаление объектов массива
     }
-    delete[] arrPointer;                          //                    удаление массива
+    delete[] arrPointer;                          //                        удаление массива
     cout<<"Массив удалён"<<endl;
     return;
 }
